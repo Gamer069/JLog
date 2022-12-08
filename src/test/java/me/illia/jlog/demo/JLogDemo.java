@@ -7,10 +7,13 @@ public class JLogDemo {
     // That's why the args for that are Strings
     public static final JLoggerStyle style = new JLoggerStyle();
     public static void main(String[] args) {
+        // Get the user input
+        String input = JLogger.getUserInput();
+
         // Set the JLogger style
         JLogger.setStyle(style);
 
-        // Print out 'Hello JLog!' yellow
-        JLogger.log(JLogLvl.WARNING, "Hello JLog!");
+        // Print out the user input yellow 2 times
+        JLogger.log(JLogLvl.INFO, input, 1);
     }
 }
