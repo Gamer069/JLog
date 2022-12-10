@@ -13,7 +13,7 @@ public class JLogDemo {
         // Set the JLogger style
         JLogger.setStyle(style);
 
-        // Print out the user input yellow 2 times
-        JLogger.log(JLogLvl.INFO, input, 1);
+        // Print out the user input green
+        JLogger.log(JLogLvl.INFO, input);
     }
 }
