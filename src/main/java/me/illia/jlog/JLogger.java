@@ -3,41 +3,43 @@ package me.illia.jlog;
 import java.util.Scanner;
 
 public class JLogger {
-    public static JLoggerStyle style;
-    private static final Scanner inScanner = new Scanner(System.in);
-
+    private static final Scanner IN = new Scanner(System.in);
     public static int RESULT = 1;
+    private static JLoggerStyle style;
+
     // The return type of the log() method represents did the program fail, did it succeed, or did it 'super failed' aka critical error
     public static int log(JLogLvl lvl, Object msg) {
         if (style == null) {
             RESULT = -1;
-            
-            throw new IllegalArgumentException("You should call the method 'setStyle' before logging anything to the console!");
+
+            throw new IllegalArgumentException("You should call the 'setStyle' method before logging anything to the console!");
         }
 
         String stringMsg = msg.toString();
 
+        if (!stringMsg.endsWith("\r")) stringMsg += '\r';
+
         switch (lvl) {
             case INFO -> {
-                System.out.println(style.info + stringMsg);
-                
+                System.out.println(style.info.normalize() + stringMsg);
+
                 RESULT = 1;
             }
 
             case ERROR -> {
-                System.out.println(style.error + stringMsg);
+                System.out.println(style.error.normalize() + stringMsg);
 
                 RESULT = 0;
             }
 
             case WARNING -> {
-                System.out.println(style.warning + stringMsg);
+                System.out.println(style.warning.normalize() + stringMsg);
 
                 RESULT = 1;
             }
 
             case CRITICAL -> {
-                System.out.println(style.critical + "CRITICAL ERROR: " + style.criticalMsg + stringMsg);
+                System.out.println(style.critical.normalize() + "CRITICAL ERROR: " + stringMsg);
 
                 RESULT = -1;
             }
@@ -50,7 +52,7 @@ public class JLogger {
         }
 
         if (RESULT <= 0) System.exit(RESULT);
-        
+
         return RESULT;
     }
 
@@ -59,8 +61,14 @@ public class JLogger {
     }
 
     public static String getUserInput() {
-        inScanner.reset();
+        IN.reset();
 
-        return inScanner.nextLine();
+        return IN.nextLine();
+    }
+
+    public static char getUserInputChar() {
+        IN.reset();
+
+        return IN.next().charAt(0);
     }
 }
