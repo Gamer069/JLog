@@ -7,8 +7,10 @@ public final class JLogColor {
 
     public static final JLogColor INSTANCE = new JLogColor();
 
+    // CREDITS:
     // JLogColor code strings from:
     // http://www.topmudsites.com/forums/mud-coding/413-java-ansi.html
+
     private static final String LG = "\u001B[38;5;78m";
     public static final JLogColor LIGHT_GREEN = new JLogColor(LG);
     private static final String SN = "\u001B[0m";
@@ -18,6 +20,8 @@ public final class JLogColor {
     public static final JLogColor HIGH_INTENSITY = new JLogColor(HI);
     public static final JLogColor BOLD = HIGH_INTENSITY;
     private static final String LI = "\u001B[2m";
+    public static final String RST = "\033[0m";
+    public static final JLogColor RESET = new JLogColor(RST);
     public static final JLogColor LOW_INTENSITY = new JLogColor(LI);
     public static final JLogColor NORMAL = LOW_INTENSITY;
     private static final String I = "\u001B[3m";
@@ -76,10 +80,10 @@ public final class JLogColor {
         codes_str = _codes_str.toString();
     }
 
-    public static JLogColor of(String ANSI) {
-        INSTANCE.code = ANSI;
+    public static JLogColor of(String code) {
+        INSTANCE.code = code;
 
-        return new JLogColor(ANSI);
+        return new JLogColor(code);
     }
 
     public JLogColor and(JLogColor other) {
