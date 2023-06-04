@@ -1,53 +1,105 @@
 package me.illia.jlog;
 
-import java.util.Random;
+import me.illia.jlog.log.LogFile;
+import me.illia.jlog.other.JLogColor;
+import me.illia.jlog.other.JLogTimestamp;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
 
 public class JLogger {
-    public static JLoggerStyle style;
-    // The return type of the log() method represents did the program fail, did it succeed, or did it 'super failed' aka critical error
-    public static int log(JLogLvl lvl, Object msg) {
-        int result = -2;
+    private static final Scanner IN = new Scanner(System.in);
+    public static Date date;
+    public static String LOG_PATH = "*/latest.log";
+    public static ArrayList<String> LOGS = new ArrayList<>();
+    private static JLoggerStyle style = new JLoggerStyle();
 
-        if (style == null) {
-            result = -1;
-            throw new IllegalArgumentException("You should call the method 'setStyle' before logging anything to the console!");
-        }
-
+    public static void log(JLogLvl lvl, Object msg) {
         String stringMsg = msg.toString();
+
+        if (!stringMsg.endsWith("\r")) stringMsg += '\r';
+        date = new Date();
+
+        StringBuilder loggedMsg = new StringBuilder("{" + JLogTimestamp.formatted(date) + "}: ");
+
+        StringBuilder logFileMsg = new StringBuilder("{" + JLogTimestamp.formatted(date) + "}: ");
 
         switch (lvl) {
             case INFO -> {
-                System.out.println("\u001B[32m" + stringMsg);
-                result = 1;
-            }
+                loggedMsg.append(style.info.normalize());
+                loggedMsg.append("INFO: ");
+                loggedMsg.append(stringMsg);
+                loggedMsg.append(JLogColor.RESET.normalize());
 
+                logFileMsg.append("INFO: ");
+                logFileMsg.append(stringMsg);
+            }
             case ERROR -> {
-                System.out.println(style.error + stringMsg);
-                result = 0;
-            }
+                loggedMsg.append(style.error.normalize());
+                loggedMsg.append("ERROR: ");
+                loggedMsg.append(stringMsg);
+                loggedMsg.append(JLogColor.RESET.normalize());
 
+                logFileMsg.append("ERROR: ");
+                logFileMsg.append(stringMsg);
+            }
             case WARNING -> {
-                System.out.println(style.warning + stringMsg);
-                result = 1;
-            }
+                loggedMsg.append(style.warning.normalize());
+                loggedMsg.append("WARNING: ");
+                loggedMsg.append(stringMsg);
+                loggedMsg.append(JLogColor.RESET.normalize());
 
+                logFileMsg.append("WARNING: ");
+                logFileMsg.append(stringMsg);
+            }
             case CRITICAL -> {
-                System.out.println(style.critical + "CRITICAL ERROR: " + style.criticalMsg + stringMsg);
-                result = -1;
-            }
+                loggedMsg.append(style.critical.normalize());
+                loggedMsg.append("CRITICAL ERROR: ");
+                loggedMsg.append(stringMsg);
+                loggedMsg.append(JLogColor.RESET.normalize());
 
-            case NORMAL -> {
-                System.out.println(stringMsg);
-                result = 1;
+                logFileMsg.append("CRITICAL ERROR: ");
+                logFileMsg.append(stringMsg);
             }
+            case NORMAL -> System.out.println(stringMsg);
+
+            default -> throw new IllegalStateException("Unexpected value: " + lvl);
         }
 
-        if (result <= 0) System.exit(result);
-        
-        return result;
+        if (lvl != JLogLvl.NORMAL) {
+            LOGS.add(logFileMsg.toString());
+            System.out.println(loggedMsg);
+        } else {
+            LOGS.add(stringMsg);
+        }
     }
 
     public static void setStyle(JLoggerStyle style) {
-        JLogger.style = style;
+        // Check if it's null, then don't set it.
+
+        // Setting the style to default by using null in setStyle is not recommended. The style is already set to default.
+
+        if (style != null) {
+            JLogger.style = style;
+        }
+    }
+
+    public static String input() {
+        IN.reset();
+
+        return IN.nextLine();
+    }
+
+    public static void saveLog(String logPath) {
+        /*
+            in logPath, you can use '~' in the path (if you don't know, ~ means home directory).
+            you can also use '*' in the path (* means project directory, see 'LogFile.java' for more details.)
+            make logPath empty to use the default path. ("")
+         */
+
+        LOG_PATH = logPath.isEmpty() || logPath.isBlank() ? LOG_PATH : logPath;
+
+        new LogFile(LOG_PATH, LOGS.toArray());
     }
 }

@@ -1,60 +1,56 @@
 package me.illia.jlog;
 
+import me.illia.jlog.other.*;
+
 public class JLoggerStyle {
-    protected String error;
-    protected String warning;
-    protected String critical;
-    protected String criticalMsg;
-    protected String info;
+    protected JLogColor error;
+    protected JLogColor warning;
+    protected JLogColor critical;
+    protected JLogColor info;
 
     public JLoggerStyle() {
-        setInfo("\u001B[32m");
-        setCritical("\u001B[31m", "\u001B[30m");
-        setWarning("\u001B[33m");
-        setError("\u001B[31m");
+        setInfo(JLogColor.GREEN);
+        setCritical(JLogColor.DARK_RED);
+        setWarning(JLogColor.YELLOW);
+        setError(JLogColor.RED);
     }
-    public JLoggerStyle(String error, String warning, String critical, String criticalMsg, String info) {
+    public JLoggerStyle(JLogColor error, JLogColor warning, JLogColor critical, JLogColor info) {
         setError(error);
         setWarning(warning);
-        setCritical(critical, criticalMsg);
+        setCritical(critical);
         setInfo(info);
     }
 
-    public JLoggerStyle setError(String error) {
+    public JLoggerStyle setError(JLogColor error) {
         this.error = error;
         return this;
     }
-    public JLoggerStyle setWarning(String warning) {
+    public JLoggerStyle setWarning(JLogColor warning) {
         this.warning = warning;
         return this;
     }
-    public JLoggerStyle setCritical(String critical, String criticalMsg) {
+    public JLoggerStyle setCritical(JLogColor critical) {
         this.critical = critical;
-        this.criticalMsg = criticalMsg;
         return this;
     }
-    public JLoggerStyle setInfo(String info) {
+    public JLoggerStyle setInfo(JLogColor info) {
         this.info = info;
         return this;
     }
 
-    public String getError() {
+    public JLogColor getError() {
         return error;
     }
 
-    public String getWarning() {
+    public JLogColor getWarning() {
         return warning;
     }
 
-    public String getCritical() {
+    public JLogColor getCritical() {
         return critical;
     }
 
-    public String getCriticalMsg() {
-        return criticalMsg;
-    }
-
-    public String getInfo() {
+    public JLogColor getInfo() {
         return info;
     }
 }
