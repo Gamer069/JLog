@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class JLogger {
     private static final Scanner IN = new Scanner(System.in);
-    public static Date date = new Date();
+    public static Date date;
     public static String LOG_PATH = "*/latest.log";
     public static ArrayList<String> LOGS = new ArrayList<>();
     private static JLoggerStyle style = new JLoggerStyle();
@@ -19,6 +19,7 @@ public class JLogger {
         String stringMsg = msg.toString();
 
         if (!stringMsg.endsWith("\r")) stringMsg += '\r';
+        date = new Date();
 
         StringBuilder loggedMsg = new StringBuilder("{" + JLogTimestamp.formatted(date) + "}: ");
 
