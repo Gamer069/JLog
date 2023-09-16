@@ -20,4 +20,4 @@
 
 ### added logf
 
-### code: <will add after update README>
+### code: [here](https://github.com/Gamer069/JLog/tree/0ac69c25984a79f81af98b6931f8553dac11b329)
