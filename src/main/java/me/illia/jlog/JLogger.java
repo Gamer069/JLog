@@ -93,9 +93,9 @@ public class JLogger {
 
     public static void saveLog(String logPath) {
         /*
-            in logPath, you can use '~' in the path (if you don't know, ~ means home directory).
-            you can also use '*' in the path (* means project directory, see 'LogFile.java' for more details.)
-            make logPath empty to use the default path. ("")
+            in logPath, you can use '~' in the path,
+            you can also use '*' in the path ('*' means the root project directory, where pom.xml/build.gradle is),
+            make logPath empty to use the default path.
          */
 
         LOG_PATH = logPath.isEmpty() || logPath.isBlank() ? LOG_PATH : logPath;
