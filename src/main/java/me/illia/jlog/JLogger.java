@@ -1,6 +1,6 @@
 package me.illia.jlog;
 
-import me.illia.jlog.log.LogFile;
+import me.illia.jlog.log.JLogFile;
 import me.illia.jlog.other.JLogColor;
 import me.illia.jlog.other.JLogTimestamp;
 
@@ -18,6 +18,15 @@ public class JLogger {
 
     private JLogger(String name) {
         this.name = name;
+    }
+
+    public static String input() {
+        IN.reset();
+        String result = IN.nextLine();
+
+        LOGS.add("(" + JLogTimestamp.formatted(new Date()) + ") " + "INPUT: " + result + '\n');
+
+        return result;
     }
 
     public void log(JLogLvl lvl, Object msg) {
@@ -113,25 +122,113 @@ public class JLogger {
         System.out.println(loggedMsg);
     }
 
-    public static String input() {
-        IN.reset();
+    public void logf(JLogLvl lvl, Object msg, Object... args) {
+        String stringMsg = msg.toString();
 
-        return IN.nextLine();
+        if (!stringMsg.endsWith("\r")) stringMsg += '\r';
+        stringMsg = JParser.parse(stringMsg, args);
+        date = new Date();
+
+        StringBuilder loggedMsg = new StringBuilder(JLogColor.CYAN.normalize() + "(" + JLogTimestamp.formatted(date) + ")" + JLogColor.RESET.normalize() + " ");
+
+        StringBuilder logFileMsg = new StringBuilder("(" + JLogTimestamp.formatted(date) + ") ");
+
+        switch (lvl) {
+            case INFO -> {
+                loggedMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append(style.info.normalize())
+                        .append("{INFO} ")
+                        .append(stringMsg)
+                        .append(JLogColor.RESET.normalize());
+
+                logFileMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append("{INFO} ")
+                        .append(stringMsg);
+            }
+            case ERROR -> {
+                loggedMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append(style.error.normalize())
+                        .append("{ERROR} ")
+                        .append(stringMsg)
+                        .append(JLogColor.RESET.normalize());
+
+                logFileMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append("{ERROR} ")
+                        .append(stringMsg);
+            }
+            case WARNING -> {
+                loggedMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append(style.warning.normalize())
+                        .append("{WARNING} ")
+                        .append(stringMsg)
+                        .append(JLogColor.RESET.normalize());
+
+                logFileMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append("{WARNING} ")
+                        .append(stringMsg);
+            }
+            case CRITICAL -> {
+                loggedMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append(style.critical.normalize())
+                        .append("{CRITICAL} ")
+                        .append(stringMsg)
+                        .append(JLogColor.RESET.normalize());
+
+                logFileMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append("{CRITICAL} ")
+                        .append(stringMsg);
+            }
+            case NORMAL -> {
+                loggedMsg.append("[")
+                        .append(name)
+                        .append("]")
+                        .append("{NORMAL} ")
+                        .append(stringMsg);
+
+                logFileMsg.append("[")
+                        .append(name)
+                        .append("] ")
+                        .append("{NORMAL} ")
+                        .append(stringMsg);
+            }
+
+            default -> throw new IllegalStateException("Unexpected value: " + lvl);
+        }
+
+
+        LOGS.add(logFileMsg.toString());
+        System.out.println(loggedMsg);
     }
 
     public void saveLog(String logPath, boolean dateMode) {
         /*
             in logPath, you can use '~' in the path (if you don't know, ~ means home directory).
-            you can also use '*' in the path (* means project directory, see 'LogFile.java' for more details.)
+            you can also use '*' in the path (* means project directory, see 'JLogFileParser.java' for more details.)
             make logPath empty to use the default path. ("")
          */
 
 
         if (dateMode) {
-            new LogFile(LOGS.toArray(), true, this);
+            new JLogFile(LOGS.toArray(), true, this);
         } else {
             LOG_PATH = logPath.isEmpty() || logPath.isBlank() ? LOG_PATH : logPath;
-            new LogFile(LOG_PATH, LOGS.toArray(), this);
+            new JLogFile(LOG_PATH, LOGS.toArray(), this);
         }
     }
 

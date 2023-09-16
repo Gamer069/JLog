@@ -26,15 +26,12 @@ public class JLogDemo {
     public static void main(String[] args) {
         initStyle();
 
-        logger.log(JLogLvl.CRITICAL, "This is an example log message");
-        logger.log(JLogLvl.WARNING, "This is another example of a log message");
-
-        String input = JLogger.input();
-        logger.log(JLogLvl.INFO, "The user sent: '" + input + "'");
+        logger.log(JLogLvl.INFO, "This is an example log message");
+        logger.logf(JLogLvl.INFO, "This is an example log format message. Simple string: \"{}\". Simple format sequence: {/} (you can use a / between {/} to cancel it out)", "hello");
 
         // if dateMode is set to false,
         // an empty string makes the api save a log to the default path (project dir/latest.log), A * means the project directory, and ~ ofc means home directory.
-        // Else, an empty string makes the api save the log like project dir/hour-minute-second.log (the time when the save operation occurrs).
-        logger.saveLog("", true);
+        // Else, an empty string makes the api save the log like <project dir>/hour-minute-second.log (the time when the save operation occurrs).
+        logger.saveLog("*/latest.log", false);
     }
 }

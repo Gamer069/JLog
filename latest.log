@@ -1,0 +1,1 @@
+(14:25:17) [JLogDemo] {INFO} This is an example log message(14:25:17) [JLogDemo] {INFO} This is an example log format message. Simple string: "hello". Simple format sequence: {} (you can use a / between {} to cancel it out)

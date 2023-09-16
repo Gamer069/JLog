@@ -3,6 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 lol.log
+.gitignore
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
