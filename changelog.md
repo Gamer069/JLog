@@ -20,4 +20,10 @@
 
 ### added logf
 
-### code: [here](https://github.com/Gamer069/JLog/tree/0ac69c25984a79f81af98b6931f8553dac11b329)
+### code: [here](https://github.com/Gamer069/JLog/tree/68f8dd0d825b7bfd9b41ef6143e19746c598b6f9)
+
+## version 1.4:
+
+### added debug, stats, improved color parsing.
+
+### code: _unknown_

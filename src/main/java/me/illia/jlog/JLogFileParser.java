@@ -5,7 +5,8 @@ public class JLogFileParser {
     public static String parse(String path) {
         // ~ = home dir,
         // * = project dir.
-        // (eg. you have a maven project named 'test', '*' will be in the 'test' root project directory.)
-        return path.replace("*", System.getProperty("user.dir")).replace("~", System.getProperty("user.home"));
+        // (eg. you have a maven project named 'test', '?' will be in the 'test' root project directory.)
+        System.out.println(System.getProperty("user.dir"));
+        return path.replace("?", System.getProperty("user.dir")).replace("~", System.getProperty("user.home"));
     }
 }

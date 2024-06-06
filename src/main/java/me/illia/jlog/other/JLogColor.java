@@ -109,4 +109,8 @@ public final class JLogColor {
     public String getCode() {
         return code;
     }
+
+    public String toString() {
+        return normalize();
+    }
 }

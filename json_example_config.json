@@ -1,0 +1,9 @@
+{
+  "style": {
+    "info": "green",
+    "warning": "yellow",
+    "error": "red",
+    "critical": "dark_red",
+    "normal": "black"
+  }
+}

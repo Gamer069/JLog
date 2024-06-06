@@ -1,0 +1,6 @@
+[info]: GREEN
+[warning]: YELLOW
+[error]: RED
+[critical]: DARK_RED
+[normal]: BLACK
+[log_input]: TRUE

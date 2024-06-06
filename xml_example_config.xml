@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <style>
+        <info>bg_red</info>
+        <warning>yellow</warning>
+        <error>red</error>
+        <critical>dark_red</critical>
+        <log_input>true</log_input>
+    </style>
+</root>

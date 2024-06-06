@@ -24,9 +24,9 @@ public class JLogFile {
         createLogFile();
     }
 
-    public JLogFile(Object[] LOGS, boolean dateMode, JLogger logger) {
+    public JLogFile(Object[] logs, boolean dateMode, JLogger logger) {
         this.dateMode = dateMode;
-        this.LOGS = LOGS;
+        this.LOGS = logs;
         this.logger = logger;
 
         createLogFile();

@@ -1,0 +1,6 @@
+style:
+  info: green
+  warning: yellow
+  error: red
+  critical: dark_red
+  log_input: true
