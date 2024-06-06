@@ -26,4 +26,4 @@
 
 ### added debug, stats, improved color parsing
 
-### code: _unknown_
+### code: [here](https://github.com/Gamer069/JLog/tree/061208666b48cf83ad16f27eb8e979950c55f152)
