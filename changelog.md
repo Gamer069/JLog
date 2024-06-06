@@ -24,6 +24,6 @@
 
 ## version 1.4:
 
-### added debug, stats, improved color parsing.
+### added debug, stats, improved color parsing
 
 ### code: _unknown_
